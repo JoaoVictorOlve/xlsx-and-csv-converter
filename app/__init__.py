@@ -3,7 +3,7 @@ from os import environ as env
 
 app = Flask(__name__)
 
-if env["ENV"] == "production":
+if env["FLASK_ENV"] == "production":
     app.config.from_object("config.ProductionConfig")
     app.debug = False
 else:

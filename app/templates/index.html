@@ -1,8 +1,21 @@
 {% extends 'templates/template.html' %}
 
-{% block lines %}
-<div class="input-group mb-3">
-    <input type="file" class="form-control" id="inputGroupFile02">
-    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+{% block title %}CSV and XLSX (Excel) Conversor{% endblock %}
+
+{% block content %}Convert your csv files to xlsx and vice versa{% endblock %}
+
+{% block card %}
+<div class="card">
+    <div id="card-body" class="card-body">
+        <div class="input-group mb-3">
+            <input type="file" id="selectedFile" style="display: none;" method="POST" onchange="getFileData(this)" />
+            <button class="btn btn-success" type="file" id="inputGroupFileAddon03" onclick="document.getElementById('selectedFile').click();">Select archive</button>
+            <label class="form-control form-control-lg" id="formFileLg" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                <span></span>
+            </label>
+          </div>
+
+          <!-- <button id="convert-btn" type="button" class="justify-content-center btn btn-success shadow rounded-2 btn-lg">Convert File</button> -->
+    </div>
 </div>
 {% endblock %}
