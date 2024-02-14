@@ -1,4 +1,6 @@
 let filenameLabel = document.getElementById("formFileLg")
+let selectedFile = document.getElementById("selectedFile")
+let convertBtn = document.getElementById("convert-btn")
 
 async function getFileData(myFile){
     var data = new FormData()
@@ -8,9 +10,19 @@ async function getFileData(myFile){
         body: data,
     }).then(res=>{
         if(res.status == 200){
-            filenameLabel.innerText = myFile.files[0].name
+            filename = myFile.files[0].name
+            filenameLabel.innerText = filename;
+            convertBtn.style = "display:block";
+            if (filename.split('.').pop() == "xlsx"){
+                convertBtn.innerText = "Convert to CSV"
+            } else {
+                convertBtn.innerText = "Convert to XLSX"
+            }
+        } else {
+            selectedFile.value = "";
+            filenameLabel.innerText = "";
+            convertBtn.style = "display:none";
         }
     })
 
-    
 }

@@ -1,6 +1,6 @@
 import os
 from app import app
-from flask import render_template, request, make_response, jsonify
+from flask import render_template, request, make_response, jsonify, flash
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -27,14 +27,14 @@ def verify_file():
     if 'file' in request.files:
         file = request.files['file']
         if file.filename == "":
-            print("File must have name")
+            flash(message="File must have name", category="error")
             res = make_response(jsonify({"message":"File must have name"}), 400)
-            return res
+            return render_template("index.html"), 400
             
         if not allowed_file(file.filename):
-            print("File extension is not allowed")
+            flash(message="File extension is not allowed", category="error")
             res = make_response(jsonify({"message":"File extension is not allowed"}), 400)
-            return res
+            return render_template("index.html"), 400
         else:
             print("Ok")
             res = make_response(jsonify({"message":"File is ok"}), 200)

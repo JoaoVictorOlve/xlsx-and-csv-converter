@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -18,7 +19,21 @@
           <span style="font-weight:bold;margin-left:10px">XLSX and CSV Converter</span>
         </a>
     </nav>
-          
+    
+    {% with errors = get_flashed_messages() %}
+    {% if errors %}
+      {% for message in errors %}
+        {% set category = message[1] if message|length > 1 else 'info' %}
+        <div class="alert alert-{{ category }}">
+          <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ message[0] }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}  
+
     <div class="container">
 
       <div id="title-body" class="page-title text-center">
