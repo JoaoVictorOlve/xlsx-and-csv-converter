@@ -19,6 +19,7 @@ async function getFileData(myFile){
                 convertBtn.innerText = "Convert to XLSX"
             }
         } else {
+            location.reload();
             selectedFile.value = "";
             filenameLabel.innerText = "";
             convertBtn.style = "display:none";

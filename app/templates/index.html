@@ -7,16 +7,16 @@
 {% block card %}
 
 <div class="card">
-    <div id="card-body" class="card-body">
+      <form action="/convert-file" method="POST" enctype = "multipart/form-data" id="card-body" class="card-body">
         <div class="input-group mb-3">
-            <input type="file" id="selectedFile" style="display: none;" method="POST" onchange="getFileData(this)" />
-            <button class="btn btn-success" type="file" id="inputGroupFileAddon03" onclick="document.getElementById('selectedFile').click();">Select archive</button>
+            <input type="file" name="file" id="selectedFile" style="display: none;" onchange="getFileData(this)" />
+            <button class="btn btn-success" type="button" id="inputGroupFileAddon03" onclick="document.getElementById('selectedFile').click();">Select archive</button>
             <label class="form-control form-control-lg" id="formFileLg" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
                 <span></span>
             </label>
           </div>
 
-          <button style="display:none" id="convert-btn" type="button" class="justify-content-center btn btn-success shadow rounded-2 btn-lg">Convert File</button>
-    </div>
+          <button style="display:none" id="convert-btn" type="submit" class="justify-content-center btn btn-success shadow rounded-2 btn-lg">Convert File</button>
+      </form>
 </div>
 {% endblock %}
