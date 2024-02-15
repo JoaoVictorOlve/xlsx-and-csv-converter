@@ -1,14 +1,14 @@
 {% extends 'templates/template.html' %}
 
-{% block title %}CSV and XLSX (Excel) Converter{% endblock %}
+{% block title %}Converted!{% endblock %}
 
-{% block content %}Convert your csv files to xlsx and vice versa{% endblock %}
+{% block content %}Click in the button bellow to download your file{% endblock %}
 
 {% block card %}
 
 <div class="card">
       <div id="card-body" class="card-body">
-        <h1>Olá</h1>
+        <button id="convert-btn" type="submit" class="justify-content-center btn btn-success shadow rounded-2 btn-lg">{{ original_filename }}</button>
       </div>
 </div>
 {% endblock %}
