@@ -6,9 +6,9 @@
 
 {% block card %}
 
-<div class="card">
+<form method="GET" action="/download-file" enctype = "multipart/form-data" class="card">
       <div id="card-body" class="card-body">
         <button id="convert-btn" type="submit" class="justify-content-center btn btn-success shadow rounded-2 btn-lg">{{ original_filename }}</button>
       </div>
-</div>
+</form>
 {% endblock %}
