@@ -6,6 +6,17 @@ import time
 from werkzeug.utils import secure_filename
 import datetime
 import uuid
+import app.helper as helper
+import threading
+
+app.config["FILE_UPLOADS"] = r"/mnt/c/Users/Computador/Documents/xlsx-and-csv-converter/app/static/files/uploads"
+
+@app.before_request
+def schedule_removal():
+    directory = app.config["FILE_UPLOADS"]
+    background_thread = threading.Thread(target=helper.schedule_file_removal, args=(directory, 10))
+    background_thread.daemon = True
+    background_thread.start()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -49,7 +60,6 @@ def convert_file():
 
     if request.method == "POST":
         if 'file' in request.files:
-            print("tem arquivo")
             file = request.files['file']
             if file.filename == "":
                 flash("File must have name", category="error")
@@ -63,7 +73,6 @@ def convert_file():
             
             else:
                 filename_and_ext_list = file.filename.rsplit(".", 1)
-                print(filename_and_ext_list)
                 if filename_and_ext_list[1] == "xlsx":
 
                     read_file = pd.read_excel(file, header=0)
@@ -86,10 +95,12 @@ def convert_file():
             
 @app.route('/result-page', methods=["GET"])
 def result_page():
-    filename = session["filename"]
-    original_filename = filename.split("-", 1)[1]
-    print(original_filename)
-    return render_template("result.html", original_filename=original_filename)
+    if session["filename"]:
+        filename = session["filename"]
+        original_filename = filename.split("-", 1)[1]
+        return render_template("result.html", original_filename=original_filename)
+    else:
+        redirect(url_for('index'))
 
 @app.route('/download-file', methods=["GET"])
 def download_file():
@@ -97,4 +108,11 @@ def download_file():
         filename = session["filename"]
         print(filename)
         original_filename = filename.split("-", 1)[1]
-        return send_from_directory(directory=r"/mnt/c/Users/Computador/Documents/xlsx-and-csv-converter/app/static/files/uploads", path=filename, as_attachment=True)
+        try:
+            return send_from_directory(directory=app.config["FILE_UPLOADS"], path=filename, download_name=original_filename, as_attachment=True)
+        except:
+            flash("File could not be downloaded", category="error")
+            return redirect(url_for('result_page'))
+    else:
+        flash("File could not be downloaded", category="error")
+        return redirect(url_for('index'))
