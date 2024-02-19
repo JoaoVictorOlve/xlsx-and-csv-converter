@@ -1,7 +1,7 @@
 import os
 from app import app
 import pandas as pd
-from flask import render_template, request, make_response, jsonify, flash, redirect, url_for, Response, session, send_from_directory
+from flask import render_template, request, make_response, jsonify, flash, redirect, url_for, session, send_from_directory 
 import time
 from werkzeug.utils import secure_filename
 import datetime
@@ -9,12 +9,13 @@ import uuid
 import app.helper as helper
 import threading
 
-app.config["FILE_UPLOADS"] = r"/mnt/c/Users/Computador/Documents/xlsx-and-csv-converter/app/static/files/uploads"
+app.config["FILE_UPLOADS"] = r"/mnt/c/Users/Computador/Documents/xlsx-and-csv-converter/flask/app/static/files/uploads"
 
 @app.before_request
 def schedule_removal():
+    app.before_request_funcs[None].remove(schedule_removal)
     directory = app.config["FILE_UPLOADS"]
-    background_thread = threading.Thread(target=helper.schedule_file_removal, args=(directory, 10))
+    background_thread = threading.Thread(target=helper.schedule_file_removal, args=(directory,))
     background_thread.daemon = True
     background_thread.start()
 
@@ -88,7 +89,7 @@ def convert_file():
                     read_file = pd.read_csv(file, header=0)
                     datetime_name = str(datetime.datetime.now().date()).replace('-', '_') + '_' + str(datetime.datetime.now().time()).replace(':', '_').replace('.', '_')
                     uuid_name = uuid.uuid4().hex
-                    unique_filename = f"{datetime_name}_{uuid_name}-{filename_and_ext_list[0]}.xlsx"
+                    unique_filename = f"{datetime_name}_{uuid_name}-{secure_filename(filename_and_ext_list[0])}.xlsx"
                     read_file.to_excel(os.path.join("./app/static/files/uploads/",unique_filename), index=False)
                     session["filename"] = unique_filename
                     return redirect(url_for("result_page"))
@@ -106,8 +107,8 @@ def result_page():
 def download_file():
     if "filename" in session:
         filename = session["filename"]
-        print(filename)
         original_filename = filename.split("-", 1)[1]
+        print(original_filename)
         try:
             return send_from_directory(directory=app.config["FILE_UPLOADS"], path=filename, download_name=original_filename, as_attachment=True)
         except:
