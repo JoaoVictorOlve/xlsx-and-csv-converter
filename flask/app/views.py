@@ -9,7 +9,7 @@ import uuid
 import app.helper as helper
 import threading
 
-app.config["FILE_UPLOADS"] = r"/mnt/c/Users/Computador/Documents/xlsx-and-csv-converter/flask/app/static/files/uploads"
+app.config["FILE_UPLOADS"] = r"static/files/uploads"
 
 @app.before_request
 def schedule_removal():

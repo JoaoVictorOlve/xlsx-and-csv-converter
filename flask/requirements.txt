@@ -10,7 +10,9 @@ openpyxl==3.1.2
 pandas==2.2.0
 python-dateutil==2.8.2
 pytz==2024.1
+setuptools==59.6.0
 six==1.16.0
 tzdata==2024.1
 uWSGI==2.0.24
 Werkzeug==3.0.1
+wheel==0.37.1
