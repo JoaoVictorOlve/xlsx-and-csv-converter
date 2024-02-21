@@ -11,3 +11,4 @@ else:
     app.debug = True
 
 from app import views
+from app import error_handlers
