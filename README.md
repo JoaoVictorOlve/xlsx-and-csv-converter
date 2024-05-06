@@ -1,22 +1,30 @@
-# Excel and XLSX Converter
+# RPA Challenge
 
-Convert your xlsx files to csv and vice versa in a easy way using this application!
+Desafio RPA realizado com Selenium, Playwright e Pyautogui.
 ___
 
-## Project Structure
-This project was developed entirely using Python and Flask, with Nginx serving as the proxy and uWSGI as the application server.
+## Para acessar o projeto 
+* Clone o repositório no seu ambiente local com `git clone`.
+* Acesse a pasta raiz do projeto.
 ___
-
-## Prerequisites
-Make sure you have the following items installed on your system:
-* [Docker](https://docs.docker.com/)
-* [Docker Compose](https://docs.docker.com/compose/)
+## Para executar o desafio em Pyautogui 
+* `cd Pyautogui`.
+* `py -m venv .venv`
+* `.venv/Scripts/activate`
+* `py -m pip install -r requirements.txt`
+* `py -m main`
 ___
-
-## How to execute the project
-* Clone the repository in your local environment.
-* Access the root project.
-* Execute the command `docker compose build` to construct the images.
-* Execute the command `docker compose up` to create and initialize the docker containers of the project.
-* After initializing the containers, the application will be running in the address http://127.0.0.1:8000/ .
+## Para executar o desafio em Selenium 
+* `cd Selenium`.
+* `py -m venv .venv`
+* `.venv/Scripts/activate`
+* `py -m pip install -r requirements.txt`
+* `py -m main`
 ___
+## Para executar o desafio em Playwright 
+* `cd Playwright`.
+* `py -m venv .venv`
+* `.venv/Scripts/activate`
+* `py -m pip install -r requirements.txt`
+* `py -m playwright install`
+* `py -m main`
